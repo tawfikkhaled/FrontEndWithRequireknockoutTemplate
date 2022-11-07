@@ -6,34 +6,33 @@ var less = require("gulp-less");
 var project = ts.createProject("./tsconfig.json");
 var srcFiles = "./src/**/*.ts";
 var dest = "./dist";//if using independently
-//var dest = "../backend/dist/public";//if using with backend in ../backend
+var dest2 = "../backend/dist/public/dict";//if using with backend in ../backend
 
-var jsonFiles = "./src/**/*.json";
-var htmlFiles = "./src/**/*.html";
+var staticFiles = "./src/**/*.{json,html,css,js}";
 var lessFiles = "./src/**/*.less";
+
 function watchTs() {
     return gulp.watch(srcFiles, tscompile);
 }
 function tscompile() {
-    return gulp.src(srcFiles).pipe(project()).pipe(gulp.dest(dest));
+    let stream = gulp.src(srcFiles).pipe(project())
+     return stream.pipe(gulp.dest(dest2)).pipe(gulp.dest(dest))
 }
-function jsonFilesWatchAndCopy() {
-    return gulp.watch(jsonFiles, copyJson);
+function staticFilesWatchAndCopy() {
+    return gulp.watch(staticFiles, copyStaticFiles);
 }
-function copyJson() {
-    return gulp.src(jsonFiles).pipe(gulp.dest(dest));
+function copyStaticFiles() {
+    let stream = gulp.src(staticFiles)
+     return stream.pipe(gulp.dest(dest2)).pipe(gulp.dest(dest))
 }
-function htmlFilesWatchAndCopy() {
-    return gulp.watch(htmlFiles, copyHtml);
-}
-function copyHtml() {
-    return gulp.src(htmlFiles).pipe(gulp.dest(dest));
-}
+
 function lessFilesWatchAndCopy() {
     return gulp.watch(lessFiles, lessCompile);
 }
 function lessCompile() {
-    return gulp.src(lessFiles).pipe(less()).pipe(gulp.dest(dest));
+    let stream = gulp.src(lessFiles).pipe(less())
+    return stream.pipe(gulp.dest(dest)).pipe(gulp.dest(dest2))
 }
-exports.watch = gulp.series(tscompile, copyHtml, copyJson, lessCompile,
-    gulp.parallel(watchTs, jsonFilesWatchAndCopy, lessFilesWatchAndCopy, htmlFilesWatchAndCopy));
+exports.watch = gulp.series(tscompile, copyStaticFiles, lessCompile,
+    gulp.parallel(watchTs, staticFilesWatchAndCopy, lessFilesWatchAndCopy));
+
