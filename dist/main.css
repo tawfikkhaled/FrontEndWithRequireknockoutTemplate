@@ -1,0 +1,14 @@
+#file {
+  top: 200px;
+  height: 80vh;
+  width: calc(100%);
+  margin-bottom: 10px;
+}
+#header {
+  width: calc(100%);
+  margin-bottom: 10px;
+}
+#types {
+  width: calc(100%);
+  margin-bottom: 10px;
+}
