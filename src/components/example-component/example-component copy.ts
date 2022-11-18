@@ -1,7 +1,6 @@
-/// <amd-dependency path="text!./example-component.html"/>
 import * as ko from "knockout"
 
-let html = require("text!./example-component.html")
+const html = `<div data-bind="text:message"></div>`
 
 class ViewModel {
     message : KnockoutObservable<string>

@@ -1,8 +1,8 @@
-define(["require", "exports", "knockout", "text!./example-component.html"], function (require, exports, ko) {
+define(["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     exports.__esModule = true;
     exports.template = exports.viewModel = void 0;
-    var html = require("text!./example-component.html");
+    var html = "<div data-bind=\"text:message\"></div>";
     var ViewModel = /** @class */ (function () {
         function ViewModel(params, componentInfos) {
             this.message = ko.observable("this is an example of a component!");
